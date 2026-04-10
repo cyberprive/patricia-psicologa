@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta Web — Patricia de Ávila</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sage: #7C9A82;
+    --sage-light: #B8CEBC;
+    --sage-dark: #4A6B51;
+    --cream: #F7F3EE;
+    --warm-white: #FDFAF6;
+    --ink: #1C1C1A;
+    --ink-light: #4A4843;
+    --stone: #9C9289;
+    --gold: #C4A96B;
+    --gold-light: #E8D9B5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    background: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 540px; height: 540px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,154,130,0.22) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,169,107,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative; z-index: 1;
+  }
+  .brand-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+  }
+  .doc-tag {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  .cover-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative; z-index: 1;
+    gap: 20px;
+    padding: 80px 0 60px;
+  }
+  .cover-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .cover-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+  .cover-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--cream);
+    max-width: 800px;
+  }
+  .cover-title em {
+    font-style: italic;
+    color: var(--sage-light);
+  }
+  .cover-sub {
+    font-size: 15px;
+    color: var(--stone);
+    max-width: 440px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+  .cover-divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, var(--sage), transparent);
+    margin: 8px 0;
+  }
+
+  .cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative; z-index: 1;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .meta-item { color: var(--stone); font-size: 13px; }
+  .meta-item strong { color: var(--cream); display: block; font-weight: 400; font-size: 15px; margin-top: 2px; }
+  .version-pill {
+    background: rgba(124,154,130,0.2);
+    border: 1px solid rgba(124,154,130,0.3);
+    color: var(--sage-light);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 48px;
+  }
+  @media (max-width: 600px) {
+    .cover { padding: 36px 28px; }
+    .page { padding: 56px 24px; }
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+    margin-bottom: 20px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 28px; height: 1px;
+    background: var(--sage-dark);
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+  h2 em { font-style: italic; color: var(--sage-dark); }
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  /* ── INTRO / EXECUTIVE SUMMARY ── */
+  .intro-block {
+    background: var(--cream);
+    border-left: 3px solid var(--sage);
+    padding: 36px 40px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 64px;
+  }
+  .intro-block p {
+    font-size: 16px;
+    color: var(--ink-light);
+    line-height: 1.85;
+  }
+  .intro-block p + p { margin-top: 16px; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, var(--sage-light), transparent);
+    margin: 64px 0;
+  }
+
+  /* ── OBJECTIVE CARDS ── */
+  .obj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 36px;
+  }
+  .obj-card {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .obj-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--sage), var(--gold));
+  }
+  .obj-icon {
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+  .obj-card h3 { font-size: 17px; margin-bottom: 8px; }
+  .obj-card p { font-size: 14px; color: var(--ink-light); line-height: 1.7; }
+
+  /* ── DELIVERABLES ── */
+  .deliverable {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 0 20px;
+    align-items: start;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--gold-light);
+  }
+  .deliverable:last-child { border-bottom: none; }
+  .del-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--sage-light);
+    line-height: 1;
+    padding-top: 4px;
+  }
+  .del-body h3 { margin-bottom: 6px; }
+  .del-body p { font-size: 14px; color: var(--ink-light); }
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .tag {
+    background: rgba(124,154,130,0.12);
+    border: 1px solid rgba(124,154,130,0.3);
+    color: var(--sage-dark);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+  .tag.gold {
+    background: rgba(196,169,107,0.12);
+    border-color: rgba(196,169,107,0.3);
+    color: #8A6F35;
+  }
+
+  /* ── SITE SECTIONS PREVIEW ── */
+  .section-map {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  @media (max-width: 560px) { .section-map { grid-template-columns: 1fr; } }
+  .section-card {
+    border: 1px solid var(--gold-light);
+    border-radius: 14px;
+    padding: 24px 20px;
+    background: white;
+    transition: border-color 0.2s;
+  }
+  .section-card:hover { border-color: var(--sage); }
+  .section-card .sc-icon { font-size: 22px; margin-bottom: 10px; }
+  .section-card h3 { font-size: 16px; margin-bottom: 6px; }
+  .section-card p { font-size: 13px; color: var(--stone); }
+
+  /* ── SEO / MARKETING TABLE ── */
+  .seo-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+  }
+  .seo-table th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stone);
+    padding: 0 16px 12px 0;
+    border-bottom: 1px solid var(--gold-light);
+  }
+  .seo-table td {
+    padding: 14px 16px 14px 0;
+    border-bottom: 1px solid rgba(184,206,188,0.3);
+    font-size: 14px;
+    color: var(--ink-light);
+    vertical-align: top;
+  }
+  .seo-table td:first-child { color: var(--ink); font-weight: 500; }
+  .check { color: var(--sage-dark); font-size: 16px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 36px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 22px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--sage-light), var(--gold-light));
+  }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    gap: 0 24px;
+    align-items: start;
+    padding-bottom: 36px;
+    position: relative;
+  }
+  .tl-dot {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--sage);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--sage-dark);
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+  .tl-content { padding-top: 10px; }
+  .tl-week {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 4px;
+  }
+  .tl-content h3 { font-size: 17px; margin-bottom: 6px; }
+  .tl-content p { font-size: 14px; color: var(--ink-light); }
+
+  /* ── PRICING ── */
+  .price-block {
+    background: var(--ink);
+    border-radius: 24px;
+    padding: 52px 48px;
+    margin-top: 36px;
+    position: relative;
+    overflow: hidden;
+    color: var(--cream);
+  }
+  .price-block::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,154,130,0.18) 0%, transparent 70%);
+  }
+  .price-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+    position: relative; z-index: 1;
+  }
+  @media (max-width: 560px) { .price-grid { grid-template-columns: 1fr; } }
+  .price-label { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage-light); margin-bottom: 12px; }
+  .price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    line-height: 1;
+    color: white;
+  }
+  .price-amount sup { font-size: 28px; vertical-align: super; }
+  .price-note { font-size: 13px; color: var(--stone); margin-top: 8px; }
+  .price-list { list-style: none; position: relative; z-index: 1; }
+  .price-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+  }
+  .price-list li:last-child { border-bottom: none; }
+  .price-list li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .price-footer {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    position: relative; z-index: 1;
+  }
+  .maintenance-note { font-size: 13px; color: var(--stone); }
+  .maintenance-note strong { color: var(--sage-light); display: block; font-weight: 400; font-size: 15px; margin-top: 2px; }
+
+  /* ── SIGN OFF ── */
+  .signoff {
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 52px 48px;
+    text-align: center;
+    margin-top: 64px;
+  }
+  .signoff h2 { margin-bottom: 16px; }
+  .signoff p { font-size: 15px; color: var(--ink-light); max-width: 480px; margin: 0 auto 32px; }
+  .cta-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .cta-item { font-size: 14px; color: var(--stone); }
+  .cta-item strong { color: var(--sage-dark); display: block; }
+  .separator { color: var(--gold-light); }
+
+  @media print {
+    .cover { min-height: auto; padding: 48px; }
+    .page { padding: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ COVER ══════════════════════════════ -->
+<div class="cover">
+  <div class="cover-top">
+    <span class="brand-tag">Cyber Prive · Daniel Escobar</span>
+    <span class="doc-tag">Confidencial · Abril 2026</span>
+  </div>
+
+  <div class="cover-center">
+    <span class="cover-eyebrow">Proyecto Digital</span>
+    <h1 class="cover-title">
+      Sitio Web para<br><em>Patricia de Ávila</em><br>Psicóloga
+    </h1>
+    <div class="cover-divider"></div>
+    <p class="cover-sub">
+      Una presencia digital pensada para conectar con pacientes del mercado español, generar nuevas consultas y posicionarse en Google, Bing y Google Maps.
+    </p>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="meta-item">Preparado para<strong>Patricia de Ávila</strong></div>
+    <div class="meta-item">Tipo de proyecto<strong>Web One-Page + SEO Local</strong></div>
+    <div class="meta-item">Entrega estimada<strong>4 semanas</strong></div>
+    <span class="version-pill">v1.0</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ BODY ══════════════════════════════ -->
+<div class="page">
+
+  <!-- RESUMEN EJECUTIVO -->
+  <div class="section-label">Resumen Ejecutivo</div>
+  <h2>Un proyecto diseñado para <em>atraer clientes</em>, no solo existir online</h2>
+
+  <div class="intro-block">
+    <p>Este documento presenta la propuesta completa para el desarrollo del sitio web de Patricia de Ávila, psicóloga. El objetivo central no es solo crear una web bonita, sino construir una herramienta de captación activa: un sitio que aparezca en Google y Bing cuando alguien busca psicólogo en su área, que inspire confianza desde el primer segundo y que convierta visitas en consultas reales.</p>
+    <p>El proyecto incluye un sitio web de página única, completamente personalizado, optimizado para todos los dispositivos, con un plan de posicionamiento en buscadores desde el primer día y la creación de un perfil en Google Maps que refuerza la presencia local.</p>
+  </div>
+
+  <!-- OBJETIVOS -->
+  <div class="section-label">Objetivos del Proyecto</div>
+  <h2>¿Por qué <em>este enfoque</em>?</h2>
+
+  <div class="obj-grid">
+    <div class="obj-card">
+      <div class="obj-icon">🎯</div>
+      <h3>Captar Nuevos Pacientes</h3>
+      <p>El sitio está diseñado como una herramienta de ventas. Cada sección guía al visitante hacia el contacto.</p>
+    </div>
+    <div class="obj-card">
+      <div class="obj-icon">📍</div>
+      <h3>Posicionamiento Local</h3>
+      <p>SEO local orientado al mercado español para aparecer en búsquedas por ciudad o zona de consulta.</p>
+    </div>
+    <div class="obj-card">
+      <div class="obj-icon">🤝</div>
+      <h3>Generar Confianza</h3>
+      <p>Diseño que transmite calidez, profesionalismo y seguridad. Fundamental en el sector de la salud mental.</p>
+    </div>
+    <div class="obj-card">
+      <div class="obj-icon">📱</div>
+      <h3>Acceso Universal</h3>
+      <p>Experiencia perfecta en móvil, tablet y escritorio. El 70% de las búsquedas en España son desde el móvil.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ENTREGABLES -->
+  <div class="section-label">Entregables</div>
+  <h2>Qué se <em>incluye</em> en el proyecto</h2>
+
+  <div class="deliverable">
+    <div class="del-num">01</div>
+    <div class="del-body">
+      <h3>Sitio Web One-Page Personalizado</h3>
+      <p>Diseño único, creado a medida para Patricia de Ávila. Nada de plantillas genéricas. El sitio refleja su identidad profesional y habla directamente a sus pacientes potenciales.</p>
+      <div class="tag-row">
+        <span class="tag">HTML · CSS · JavaScript</span>
+        <span class="tag">Diseño a medida</span>
+        <span class="tag">Animaciones sutiles</span>
+        <span class="tag">Totalmente responsive</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="deliverable">
+    <div class="del-num">02</div>
+    <div class="del-body">
+      <h3>Alojamiento Gratuito (Sin coste de hosting)</h3>
+      <p>El sitio se publicará en GitHub Pages o Netlify, plataformas profesionales de alojamiento estático 100% gratuitas, con HTTPS incluido y alta disponibilidad. No hay cuota mensual de hosting.</p>
+      <div class="tag-row">
+        <span class="tag gold">GitHub Pages</span>
+        <span class="tag gold">Netlify (alternativa)</span>
+        <span class="tag gold">HTTPS incluido</span>
+        <span class="tag gold">Sin cuota mensual</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="deliverable">
+    <div class="del-num">03</div>
+    <div class="del-body">
+      <h3>Dominio Propio (Recomendado)</h3>
+      <p>Se recomienda contratar un dominio propio como <em>patriciadeavila.es</em> para mayor profesionalismo y SEO. Coste aproximado: 10–15 €/año. La configuración con el hosting gratuito está incluida en el proyecto.</p>
+      <div class="tag-row">
+        <span class="tag">.es o .com</span>
+        <span class="tag">~12€/año</span>
+        <span class="tag">Configuración incluida</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="deliverable">
+    <div class="del-num">04</div>
+    <div class="del-body">
+      <h3>SEO On-Page Completo</h3>
+      <p>Optimización técnica para Google y Bing desde el primer día: metaetiquetas, Open Graph, schema.org para profesionales de la salud, velocidad de carga optimizada y sitemap XML para indexación.</p>
+      <div class="tag-row">
+        <span class="tag">Meta SEO</span>
+        <span class="tag">Schema.org</span>
+        <span class="tag">Sitemap XML</span>
+        <span class="tag">Core Web Vitals</span>
+        <span class="tag">Open Graph</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="deliverable">
+    <div class="del-num">05</div>
+    <div class="del-body">
+      <h3>Alta en Google Search Console & Bing Webmaster</h3>
+      <p>Registro del sitio en las herramientas oficiales de ambos buscadores para garantizar la indexación correcta y el seguimiento del posicionamiento.</p>
+      <div class="tag-row">
+        <span class="tag">Google Search Console</span>
+        <span class="tag">Bing Webmaster Tools</span>
+        <span class="tag">Indexación inmediata</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="deliverable">
+    <div class="del-num">06</div>
+    <div class="del-body">
+      <h3>Perfil de Google Business (Google Maps)</h3>
+      <p>Creación y optimización del perfil de negocio local en Google Maps: categoría, descripción, horarios, fotos, dirección y número de contacto. Fundamental para aparecer en búsquedas locales del tipo "psicóloga en [ciudad]".</p>
+      <div class="tag-row">
+        <span class="tag gold">Google Business Profile</span>
+        <span class="tag gold">Google Maps</span>
+        <span class="tag gold">SEO Local</span>
+        <span class="tag gold">Reseñas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ESTRUCTURA DE LA WEB -->
+  <div class="section-label">Arquitectura del Sitio</div>
+  <h2>Las <em>secciones</em> del sitio web</h2>
+  <p style="color:var(--ink-light); margin-bottom:8px;">La página única está estructurada para guiar al visitante de forma natural hacia el contacto.</p>
+
+  <div class="section-map">
+    <div class="section-card">
+      <div class="sc-icon">✨</div>
+      <h3>Hero / Portada</h3>
+      <p>Primera impresión impactante con titular claro, propuesta de valor y llamada a la acción principal (CTA).</p>
+    </div>
+    <div class="section-card">
+      <div class="sc-icon">🌿</div>
+      <h3>Sobre Patricia</h3>
+      <p>Biografía profesional, formación, valores y enfoque terapéutico. Humaniza a la psicóloga y genera confianza.</p>
+    </div>
+    <div class="section-card">
+      <div class="sc-icon">💼</div>
+      <h3>Servicios</h3>
+      <p>Áreas de especialización: ansiedad, depresión, terapia de pareja, etc. Descripción clara de cada servicio.</p>
+    </div>
+    <div class="section-card">
+      <div class="sc-icon">⭐</div>
+      <h3>Testimonios / Reseñas</h3>
+      <p>Opiniones de pacientes (anonimizadas si se prefiere). El elemento de mayor conversión para nuevos clientes.</p>
+    </div>
+    <div class="section-card">
+      <div class="sc-icon">📬</div>
+      <h3>Contacto</h3>
+      <p>Formulario de contacto, teléfono, email, mapa integrado y enlace directo a WhatsApp si se desea.</p>
+    </div>
+    <div class="section-card">
+      <div class="sc-icon">🔗</div>
+      <h3>Footer</h3>
+      <p>Aviso legal, política de privacidad (obligatorio RGPD en España), redes sociales y copyright.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SEO Y MARKETING -->
+  <div class="section-label">Estrategia de Marketing Digital</div>
+  <h2>Visibilidad en <em>Google, Bing</em> y Mapas</h2>
+
+  <table class="seo-table">
+    <thead>
+      <tr>
+        <th>Acción</th>
+        <th>Herramienta</th>
+        <th>Beneficio</th>
+        <th>Incluido</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SEO técnico on-page</td>
+        <td>HTML meta tags, schema.org</td>
+        <td>Indexación correcta en buscadores</td>
+        <td><span class="check">✦</span></td>
+      </tr>
+      <tr>
+        <td>Alta en Google Search Console</td>
+        <td>Google Search Console</td>
+        <td>Google indexa el sitio rápidamente</td>
+        <td><span class="check">✦</span></td>
+      </tr>
+      <tr>
+        <td>Alta en Bing Webmaster Tools</td>
+        <td>Bing Webmaster</td>
+        <td>Visibilidad en Bing y DuckDuckGo</td>
+        <td><span class="check">✦</span></td>
+      </tr>
+      <tr>
+        <td>Google Business Profile</td>
+        <td>Google Maps</td>
+        <td>Aparece en búsquedas locales y mapas</td>
+        <td><span class="check">✦</span></td>
+      </tr>
+      <tr>
+        <td>Optimización velocidad</td>
+        <td>Lighthouse / PageSpeed</td>
+        <td>Mejor posicionamiento y experiencia</td>
+        <td><span class="check">✦</span></td>
+      </tr>
+      <tr>
+        <td>Sitemap XML + robots.txt</td>
+        <td>Estándar web</td>
+        <td>Rastreo eficiente por buscadores</td>
+        <td><span class="check">✦</span></td>
+      </tr>
+      <tr>
+        <td>Aviso legal + RGPD</td>
+        <td>Textos legales</td>
+        <td>Cumplimiento legal en España (obligatorio)</td>
+        <td><span class="check">✦</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="divider"></div>
+
+  <!-- TIMELINE -->
+  <div class="section-label">Cronograma</div>
+  <h2>De cero a online en <em>4 semanas</em></h2>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">1</div>
+      <div class="tl-content">
+        <div class="tl-week">Semana 1</div>
+        <h3>Briefing & Diseño</h3>
+        <p>Reunión de toma de datos. Definición de paleta de colores, tipografía y tono del sitio. Presentación de mockup visual para aprobación.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">2</div>
+      <div class="tl-content">
+        <div class="tl-week">Semana 2</div>
+        <h3>Desarrollo del Sitio</h3>
+        <p>Maquetación completa del sitio: todas las secciones, animaciones, formulario de contacto, mapa integrado y adaptación responsive.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">3</div>
+      <div class="tl-content">
+        <div class="tl-week">Semana 3</div>
+        <h3>SEO, Contenido & Revisiones</h3>
+        <p>Integración de textos definitivos, imágenes, optimización SEO completa. Revisión conjunta y ajustes finales.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">4</div>
+      <div class="tl-content">
+        <div class="tl-week">Semana 4</div>
+        <h3>Publicación & Alta en Buscadores</h3>
+        <p>Publicación del sitio en dominio propio. Alta en Google Search Console, Bing Webmaster y creación del perfil en Google Maps.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRECIOS -->
+  <div class="section-label">Inversión</div>
+  <h2>Precio del <em>proyecto</em></h2>
+
+  <div class="price-block">
+    <div class="price-grid">
+      <div>
+        <div class="price-label">Inversión total (pago único)</div>
+        <div class="price-amount"><sup>€</sup>850</div>
+        <div class="price-note">+ dominio ~12€/año (opcional pero recomendado)</div>
+      </div>
+      <ul class="price-list">
+        <li>Diseño personalizado completo</li>
+        <li>Desarrollo responsive (móvil, tablet, escritorio)</li>
+        <li>Hosting gratuito (sin cuota mensual)</li>
+        <li>SEO on-page técnico completo</li>
+        <li>Alta en Google Search Console & Bing</li>
+        <li>Creación perfil Google Business / Maps</li>
+        <li>Textos legales RGPD (aviso legal + privacidad)</li>
+        <li>Formulario de contacto funcional</li>
+        <li>Formación básica para gestión de reseñas</li>
+        <li>1 mes de soporte post-entrega incluido</li>
+      </ul>
+    </div>
+    <div class="price-footer">
+      <div class="maintenance-note">Mantenimiento opcional (tras 1.er mes)<strong>80 € / mes — Actualizaciones, seguridad y soporte</strong></div>
+      <div class="maintenance-note">Condiciones de pago<strong>50% al inicio · 50% en la entrega</strong></div>
+    </div>
+  </div>
+
+  <!-- SIGN OFF -->
+  <div class="signoff">
+    <div class="section-label" style="justify-content:center; margin-bottom:16px;">Siguiente paso</div>
+    <h2>¿Empezamos a <em>construir</em> tu presencia digital?</h2>
+    <p>Estaremos encantados de resolver cualquier duda, ajustar el alcance del proyecto o agendar una llamada sin compromiso.</p>
+    <div class="cta-line">
+      <div class="cta-item">Válida hasta<strong>30 de Abril de 2026</strong></div>
+      <div class="separator">·</div>
+      <div class="cta-item">Contacto<strong>escobar@cyberprive.com</strong></div>
+      <div class="separator">·</div>
+   
